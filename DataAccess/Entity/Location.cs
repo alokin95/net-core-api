@@ -10,6 +10,7 @@ namespace DataAccess.Entity
         public string Country { get; set; }
         public string City { get; set; }
         public int PostalCode { get; set; }
+        public int HotelId { get; set; }
 
         public virtual Hotel Hotel { get; set; }
     }

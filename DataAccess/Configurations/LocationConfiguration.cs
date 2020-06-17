@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 
 namespace DataAccess.Configurations
 {
@@ -12,7 +11,7 @@ namespace DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.HasKey(l => new {l.City, l.Address });
+            builder.HasIndex(l => new {l.City, l.Address, l.Country }).IsUnique();
             builder.Property(l => l.Address).IsRequired();
             builder.Property(l => l.City).IsRequired();
             builder.Property(l => l.Country).IsRequired();

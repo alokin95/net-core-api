@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200611150524_new rules.cs" />
     <Compile Remove="Migrations\20200611150524_new rules.Designer.cs" />
+    <Compile Remove="Migrations\20200617022131_updated entities.cs" />
+    <Compile Remove="Migrations\20200617022131_updated entities.Designer.cs" />
+    <Compile Remove="Migrations\20200617024209_initial.cs" />
+    <Compile Remove="Migrations\20200617024209_initial.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

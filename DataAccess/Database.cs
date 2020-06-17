@@ -10,10 +10,22 @@ namespace DataAccess
     public class Database : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Hotel> Hotels { get; set; }
+        public DbSet<Room> Rooms { get; set; }
+        public DbSet<Amenity> Amenities { get; set; }
+        public DbSet<Chain> Chains { get; set; }
+        public DbSet<Location> Locations { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.Entity<EntityBase>().HasQueryFilter(eb => eb.DeletedAt == null);
+            modelBuilder.ApplyConfiguration(new AmenityConfiguration());
+            modelBuilder.ApplyConfiguration(new HotelConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new ChainConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomConfiguration());
+            modelBuilder.ApplyConfiguration(new RoomAmenityConfiguration());
+            modelBuilder.ApplyConfiguration(new HotelAmenityConfiguration());
         }
 
         public override int SaveChanges()
@@ -25,7 +37,7 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=reservation;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=.\sqlexpress;Initial Catalog=booking;Integrated Security=True");
         }
 
 
