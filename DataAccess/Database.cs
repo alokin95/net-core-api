@@ -26,6 +26,8 @@ namespace DataAccess
             modelBuilder.ApplyConfiguration(new RoomConfiguration());
             modelBuilder.ApplyConfiguration(new RoomAmenityConfiguration());
             modelBuilder.ApplyConfiguration(new HotelAmenityConfiguration());
+
+            modelBuilder.Entity<Hotel>().HasQueryFilter(h => h.isActive && h.DeletedAt != null);
         }
 
         public override int SaveChanges()
