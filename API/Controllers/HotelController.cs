@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using API.DTO;
 using API.DTO.Search;
 using API.Errors;
+using API.Extensions;
 using API.Response;
 using API.Validations;
 using AutoMapper;
@@ -24,10 +25,9 @@ namespace API.Controllers
     {
         private readonly Database _dbContext;
         private readonly IMapper _mapper;
-
-        public HotelController(IMapper mapper)
+        public HotelController(IMapper mapper, Database context)
         {
-            _dbContext = new Database();
+            _dbContext = context;
             _mapper = mapper;
         }
 
@@ -77,23 +77,13 @@ namespace API.Controllers
 
         // POST api/<HotelController>
         [HttpPost]
-        public IActionResult Post([FromBody]HotelDto dto)
+        public IActionResult Post([FromBody]HotelDto dto, [FromServices]CreateHotelValidator createHotelValidator)
         {
-
-            var validator = new CreateHotelValidator(_dbContext);
-
-            var result = validator.Validate(dto);
+            var result = createHotelValidator.Validate(dto);
 
             if (!result.IsValid)
             {
-                return UnprocessableEntity(new
-                {
-                    Errors = result.Errors.Select(x => new ValidationError
-                    {
-                        Property = x.PropertyName,
-                        Message  = x.ErrorMessage
-                    })
-                });
+                return result.ValidationErrors();
             }
 
             var hotel = _mapper.Map<Hotel>(dto);
@@ -112,7 +102,7 @@ namespace API.Controllers
 
         // PUT api/<HotelController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] HotelDto dto)
+        public IActionResult Put(int id, [FromBody] HotelDto dto, [FromServices]EditHotelValidator editHotelValidator)
         {
             var hotel = _dbContext.Hotels.Find(dto.Id);
 
@@ -121,7 +111,24 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            return Ok();
+            var validation = editHotelValidator.Validate(dto);
+
+            if (!validation.IsValid)
+            {
+                return validation.ValidationErrors();
+            }
+
+            _mapper.Map(dto, hotel);
+
+            try
+            {
+                _dbContext.SaveChanges();
+                return NoContent();
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<HotelController>/5

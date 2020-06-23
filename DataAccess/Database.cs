@@ -39,7 +39,7 @@ namespace DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\sqlexpress;Initial Catalog=booking;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=.\sqlexpress;Initial Catalog=booking_latest;Integrated Security=True");
         }
 
 

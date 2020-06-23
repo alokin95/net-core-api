@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Validations;
 using AutoMapper;
+using DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,13 @@ namespace API
         {
             services.AddControllers();
             services.AddAutoMapper(this.GetType().Assembly);
+            services.AddTransient<Database>();
+
+            services.AddTransient<CreateHotelValidator>();
+            services.AddTransient<EditHotelValidator>();
+
+            services.AddTransient<CreateLocationValidator>();
+            services.AddTransient<EditLocationValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

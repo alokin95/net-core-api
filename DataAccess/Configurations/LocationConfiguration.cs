@@ -16,6 +16,7 @@ namespace DataAccess.Configurations
             builder.Property(l => l.City).IsRequired();
             builder.Property(l => l.Country).IsRequired();
             builder.Property(l => l.PostalCode).IsRequired();
+
         }
     }
 }
