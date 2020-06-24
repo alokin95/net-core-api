@@ -103,6 +103,8 @@ namespace API.Controllers
         public IActionResult Put(int id, [FromBody]LocationDto dto,
             [FromServices]EditLocationValidator editLocationValidator)
         {
+            dto.Id = id;
+
             var validator = editLocationValidator.Validate(dto);
 
             if (!validator.IsValid)
@@ -117,7 +119,7 @@ namespace API.Controllers
                 return NotFound();
             }
 
-            _mapper.Map(location, dto);
+            _mapper.Map(dto, location);
 
             try
             {
@@ -132,8 +134,27 @@ namespace API.Controllers
 
         // DELETE api/<LocationController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var location = _dbContext.Locations.Find(id);
+
+            if (location == null)
+            {
+                return NotFound();
+            }
+
+            location.DeletedAt = DateTime.Now;
+            location.isActive = false;
+
+            try
+            {
+                _dbContext.SaveChanges();
+                return NoContent();
+            }
+            catch(Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

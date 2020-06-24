@@ -28,6 +28,7 @@ namespace DataAccess
             modelBuilder.ApplyConfiguration(new HotelAmenityConfiguration());
 
             modelBuilder.Entity<Hotel>().HasQueryFilter(h => h.isActive && h.DeletedAt != null);
+            modelBuilder.Entity<Location>().HasQueryFilter(l => l.isActive && l.DeletedAt != null);
         }
 
         public override int SaveChanges()

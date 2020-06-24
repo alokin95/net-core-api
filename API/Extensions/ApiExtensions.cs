@@ -1,6 +1,9 @@
-﻿using API.Errors;
+﻿using API.DTO;
+using API.Errors;
+using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +28,10 @@ namespace API.Extensions
             });
         }
 
+        public static IRuleBuilderOptions<T, TProperty> LocationMustBeUnique<T, TProperty>(
+            this IRuleBuilderOptions<T, TProperty> rule, string format)
+        {
+            return rule.WithMessage("The address already exists in the database");
+        }
     }
 }
