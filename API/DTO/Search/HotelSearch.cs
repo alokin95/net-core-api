@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 namespace API.DTO.Search
 {
 
-    public class HotelSearch
+    public class HotelSearch : LocationSearch
     {
-        public string Country { get; set; }
-        public string City { get; set; }
-        public string PostalCode { get; set; }
+        public string Name { get; set; }
     }
 }

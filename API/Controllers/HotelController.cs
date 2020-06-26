@@ -44,6 +44,26 @@ namespace API.Controllers
                     hotelsQuery = hotelsQuery.Where(h => h.Location.Country.ToLower().Contains(dto.Country.ToLower()));
                 }
 
+                if (dto.City != null)
+                {
+                    hotelsQuery = hotelsQuery.Where(h => h.Location.City.ToLower().Contains(dto.Country.ToLower()));
+                }
+
+                if (dto.Address != null)
+                {
+                    hotelsQuery = hotelsQuery.Where(h => h.Location.Address.ToLower().Contains(dto.Address.ToLower()));
+                }
+
+                if (dto.Name != null)
+                {
+                    hotelsQuery = hotelsQuery.Where(h => h.Name.ToLower().Contains(dto.Name.ToLower()));
+                }
+
+                if (dto.PostalCode.ToString() != null)
+                {
+                    hotelsQuery = hotelsQuery.Where(h => h.Location.PostalCode == dto.PostalCode);
+                }
+
                 var response = _mapper.Map<List<HotelDto>>(hotelsQuery.ToList());
 
                 return Ok(response);

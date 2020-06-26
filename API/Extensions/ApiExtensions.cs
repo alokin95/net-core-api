@@ -27,11 +27,5 @@ namespace API.Extensions
                 Errors = errors
             });
         }
-
-        public static IRuleBuilderOptions<T, TProperty> LocationMustBeUnique<T, TProperty>(
-            this IRuleBuilderOptions<T, TProperty> rule, string format)
-        {
-            return rule.WithMessage("The address already exists in the database");
-        }
     }
 }
