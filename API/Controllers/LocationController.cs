@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.DTO;
-using API.DTO.Search;
-using API.Extensions;
-using API.Validations;
+using Application.DataTransfer;
+using Application.DataTransfer.Search;
 using AutoMapper;
 using DataAccess;
-using DataAccess.Entity;
+using Domain.Entity;
+using Implementation.Validations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -80,7 +79,7 @@ namespace API.Controllers
 
             if (!validator.IsValid)
             {
-                return validator.ValidationErrors();
+                //return validator.ValidationErrors();
             }
 
             var location = _mapper.Map<Location>(dto);
@@ -109,7 +108,7 @@ namespace API.Controllers
 
             if (!validator.IsValid)
             {
-                return validator.ValidationErrors();
+                //return validator.ValidationErrors();
             }
 
             var location = _dbContext.Locations.Find(id);

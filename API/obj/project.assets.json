@@ -349,6 +349,15 @@
           }
         }
       },
+      "Newtonsoft.Json/12.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
       "runtime.native.System/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1291,19 +1300,60 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "DataAccess/1.0.0": {
+      "Application/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
         "dependencies": {
+          "Domain": "1.0.0",
+          "Newtonsoft.Json": "12.0.3"
+        },
+        "compile": {
+          "bin/placeholder/Application.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Application.dll": {}
+        }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
+      },
+      "EFDataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Domain": "1.0.0",
           "Microsoft.EntityFrameworkCore": "3.1.5",
-          "Microsoft.EntityFrameworkCore.Relational": "3.1.5",
           "Microsoft.EntityFrameworkCore.SqlServer": "3.1.5"
         },
         "compile": {
-          "bin/placeholder/DataAccess.dll": {}
+          "bin/placeholder/EFDataAccess.dll": {}
         },
         "runtime": {
-          "bin/placeholder/DataAccess.dll": {}
+          "bin/placeholder/EFDataAccess.dll": {}
+        }
+      },
+      "Implementation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "dependencies": {
+          "Application": "1.0.0",
+          "AutoMapper": "9.0.0",
+          "AutoMapper.Extensions.Microsoft.DependencyInjection": "7.0.0",
+          "EFDataAccess": "1.0.0",
+          "FluentValidation": "8.6.2"
+        },
+        "compile": {
+          "bin/placeholder/Implementation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Implementation.dll": {}
         }
       }
     }
@@ -1877,6 +1927,37 @@
         "runtimes/win/lib/netstandard2.0/Microsoft.Win32.Registry.dll",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "Newtonsoft.Json/12.0.3": {
+      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
       ]
     },
     "runtime.native.System/4.3.0": {
@@ -5025,18 +5106,34 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "DataAccess/1.0.0": {
+    "Application/1.0.0": {
       "type": "project",
-      "path": "../DataAccess/DataAccess.csproj",
-      "msbuildProject": "../DataAccess/DataAccess.csproj"
+      "path": "../Application/Application.csproj",
+      "msbuildProject": "../Application/Application.csproj"
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
+    },
+    "EFDataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DataAccess/EFDataAccess.csproj",
+      "msbuildProject": "../DataAccess/EFDataAccess.csproj"
+    },
+    "Implementation/1.0.0": {
+      "type": "project",
+      "path": "../Implementation/Implementation.csproj",
+      "msbuildProject": "../Implementation/Implementation.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
-      "AutoMapper >= 9.0.0",
-      "AutoMapper.Extensions.Microsoft.DependencyInjection >= 7.0.0",
-      "DataAccess >= 1.0.0",
-      "FluentValidation >= 8.6.2"
+      "Application >= 1.0.0",
+      "Domain >= 1.0.0",
+      "EFDataAccess >= 1.0.0",
+      "Implementation >= 1.0.0",
+      "Newtonsoft.Json >= 12.0.3"
     ]
   },
   "packageFolders": {
@@ -5065,8 +5162,17 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\DataAccess.csproj": {
-              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\DataAccess.csproj"
+            "C:\\Users\\nikol\\source\\repos\\eschool\\Application\\Application.csproj": {
+              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\Application\\Application.csproj"
+            },
+            "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\EFDataAccess.csproj": {
+              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\EFDataAccess.csproj"
+            },
+            "C:\\Users\\nikol\\source\\repos\\eschool\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\Domain\\Domain.csproj"
+            },
+            "C:\\Users\\nikol\\source\\repos\\eschool\\Implementation\\Implementation.csproj": {
+              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\Implementation\\Implementation.csproj"
             }
           }
         }
@@ -5080,17 +5186,9 @@
     "frameworks": {
       "netcoreapp3.1": {
         "dependencies": {
-          "AutoMapper": {
+          "Newtonsoft.Json": {
             "target": "Package",
-            "version": "[9.0.0, )"
-          },
-          "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-            "target": "Package",
-            "version": "[7.0.0, )"
-          },
-          "FluentValidation": {
-            "target": "Package",
-            "version": "[8.6.2, )"
+            "version": "[12.0.3, )"
           }
         },
         "imports": [

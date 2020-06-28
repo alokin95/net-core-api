@@ -1280,6 +1280,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Domain.dll": {}
+        }
       }
     }
   },
@@ -4991,13 +5001,18 @@
         "system.xml.xmlserializer.4.3.0.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
+    },
+    "Domain/1.0.0": {
+      "type": "project",
+      "path": "../Domain/Domain.csproj",
+      "msbuildProject": "../Domain/Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "Domain >= 1.0.0",
       "Microsoft.EntityFrameworkCore >= 3.1.5",
       "Microsoft.EntityFrameworkCore.Design >= 3.1.5",
-      "Microsoft.EntityFrameworkCore.Relational >= 3.1.5",
       "Microsoft.EntityFrameworkCore.SqlServer >= 3.1.5",
       "Microsoft.EntityFrameworkCore.Tools >= 3.1.5"
     ]
@@ -5008,9 +5023,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\DataAccess.csproj",
-      "projectName": "DataAccess",
-      "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\DataAccess.csproj",
+      "projectUniqueName": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\EFDataAccess.csproj",
+      "projectName": "EFDataAccess",
+      "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\EFDataAccess.csproj",
       "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\nikol\\source\\repos\\eschool\\DataAccess\\obj\\",
       "projectStyle": "PackageReference",
@@ -5027,7 +5042,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\nikol\\source\\repos\\eschool\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\nikol\\source\\repos\\eschool\\Domain\\Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -5046,10 +5065,6 @@
           "Microsoft.EntityFrameworkCore.Design": {
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
-            "target": "Package",
-            "version": "[3.1.5, )"
-          },
-          "Microsoft.EntityFrameworkCore.Relational": {
             "target": "Package",
             "version": "[3.1.5, )"
           },

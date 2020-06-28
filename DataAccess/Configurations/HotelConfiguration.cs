@@ -1,4 +1,4 @@
-﻿using DataAccess.Entity;
+﻿using Domain.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 
-namespace DataAccess.Configurations
+namespace EFDataAccess.Configurations
 {
     public class HotelConfiguration : IEntityTypeConfiguration<Hotel>
     {

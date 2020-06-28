@@ -1,10 +1,18 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
-using API.Validations;
+using Application;
+using Application.Hotel.Queries;
+using Application.Queries;
+using Application.Queries.Chain;
 using AutoMapper;
 using DataAccess;
+using Implementation.Logger;
+using Implementation.Profiles;
+using Implementation.Queries.Chain;
+using Implementation.Queries.Hotel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -28,14 +36,16 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAutoMapper(this.GetType().Assembly);
+
             services.AddTransient<Database>();
+            //services.AddAutoMapper(typeof(Profile).GetTypeInfo().Assembly);
+            services.AddAutoMapper(typeof(ChainProfile));
+            services.AddTransient<ActionDispatcher>();
+            services.AddTransient<IApplicationActor, AdminFakeApiActor>();
+            services.AddTransient<Application.ILogger, LogToConsole>();
 
-            services.AddTransient<CreateHotelValidator>();
-            services.AddTransient<EditHotelValidator>();
+            services.AddTransient<IGetChainsQuery, GetChains>();
 
-            services.AddTransient<CreateLocationValidator>();
-            services.AddTransient<EditLocationValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

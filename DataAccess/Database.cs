@@ -1,5 +1,5 @@
-﻿using DataAccess.Configurations;
-using DataAccess.Entity;
+﻿using Domain.Entity;
+using EFDataAccess.Configurations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
