@@ -32,7 +32,7 @@ namespace API.App
 
                 switch (ex)
                 {
-                    case ActionNotAllowedException _:
+                    case ActionNotAllowedException NotAllowed:
                         statusCode = StatusCodes.Status403Forbidden;
                         response = new
                         {
@@ -48,8 +48,6 @@ namespace API.App
                         break;
                     case ValidationException validationException:
                         statusCode = StatusCodes.Status422UnprocessableEntity;
-
-
                         response = new
                         {
                             message = "Failed due to validation errors.",

@@ -15,11 +15,6 @@ namespace EFDataAccess.Configurations
             builder.HasIndex(h => h.Name).IsUnique();
             builder.Property(h => h.Description).HasMaxLength(200);
 
-            builder.HasOne(h => h.Chain)
-                .WithMany(c => c.Hotels)
-                .HasForeignKey(h => h.ChainId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             builder.HasMany(h => h.Rooms)
                 .WithOne(r => r.Hotel)
                 .HasForeignKey(r => r.HotelId)

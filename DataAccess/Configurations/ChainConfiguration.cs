@@ -18,6 +18,10 @@ namespace EFDataAccess.Configurations
                 .WithMany(m => m.Chains)
                 .HasForeignKey(c => c.ManagerId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(c => c.Hotels)
+                .WithOne(h => h.Chain)
+                .HasForeignKey(h => h.ChainId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

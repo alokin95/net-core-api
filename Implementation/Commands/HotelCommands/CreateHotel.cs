@@ -1,10 +1,10 @@
-﻿using Application.Commands;
+﻿using Application.Commands.HotelCommands;
 using Application.DataTransfer;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Implementation.Commands
+namespace Implementation.Commands.HotelCommands
 {
     public class CreateHotel : ICreateHotelCommand
     {

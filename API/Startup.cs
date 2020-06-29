@@ -3,16 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using API.App;
 using Application;
+using Application.Commands.ChainCommands;
 using Application.Hotel.Queries;
 using Application.Queries;
 using Application.Queries.Chain;
 using AutoMapper;
 using DataAccess;
+using Implementation.Commands.ChainCommands;
 using Implementation.Logger;
 using Implementation.Profiles;
-using Implementation.Queries.Chain;
+using Implementation.Queries.ChainCommands;
+using Implementation.Queries.ChainQueries;
 using Implementation.Queries.Hotel;
+using Implementation.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -38,14 +43,23 @@ namespace API
             services.AddControllers();
 
             services.AddTransient<Database>();
-            //services.AddAutoMapper(typeof(Profile).GetTypeInfo().Assembly);
-            services.AddAutoMapper(typeof(ChainProfile));
+
+            services.AddAutoMapper(typeof(ChainProfile), typeof(UserProfile), typeof(HotelProfile));
+
             services.AddTransient<ActionDispatcher>();
             services.AddTransient<IApplicationActor, AdminFakeApiActor>();
             services.AddTransient<Application.ILogger, LogToConsole>();
 
+            //Chain interfaces
             services.AddTransient<IGetChainsQuery, GetChains>();
+            services.AddTransient<IGetSingleChainQuery, GetOneChain>();
+            services.AddTransient<ICreateChainCommand, CreateChain>();
+            services.AddTransient<IEditChainCommand, EditChain>();
+            services.AddTransient<IDeleteChainCommand, DeleteChain>();
 
+            //Validations
+            services.AddTransient<CreateChainValidation>();
+            services.AddTransient<EditChainValidation>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +71,8 @@ namespace API
             }
 
             app.UseRouting();
+
+            //app.UseMiddleware<ExceptionHandler>();
 
             app.UseAuthorization();
 

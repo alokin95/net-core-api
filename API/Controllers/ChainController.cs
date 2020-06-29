@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application;
+using Application.Commands.ChainCommands;
+using Application.DataTransfer;
 using Application.DataTransfer.Search;
 using Application.Queries.Chain;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -30,27 +33,38 @@ namespace API.Controllers
 
         // GET api/<ChainController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id,
+            [FromServices]IGetSingleChainQuery getSingleChainQuery)
         {
-            return "value";
+            return Ok(_dispatcher.DispatchQuery(getSingleChainQuery, id));
         }
 
         // POST api/<ChainController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] CreateChainDto createChainDto, [FromServices]ICreateChainCommand createChainCommand)
         {
+            _dispatcher.DispatchCommand(createChainCommand, createChainDto);
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT api/<ChainController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, 
+            [FromBody] CreateChainDto chainDto,
+            [FromServices] IEditChainCommand editChainCommand)
         {
+            chainDto.Id = id;
+            _dispatcher.DispatchCommand(editChainCommand, chainDto);
+            return NoContent();
         }
 
         // DELETE api/<ChainController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id,
+            [FromServices]IDeleteChainCommand deleteChainCommand)
         {
+            _dispatcher.DispatchCommand(deleteChainCommand, id);
+            return NoContent();
         }
     }
 }

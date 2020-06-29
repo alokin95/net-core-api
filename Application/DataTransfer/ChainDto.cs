@@ -10,5 +10,6 @@ namespace Application.DataTransfer
         public int Id { get; set; }
         public string Name { get; set; }
         public UserDto Manager { get; set; }
+        public IEnumerable<HotelDto> Hotels { get; set; } = new List<HotelDto>();
     }
 }

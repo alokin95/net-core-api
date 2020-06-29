@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Commands
+namespace Application.Commands.ChainCommands
 {
-    public interface ICreateHotelCommand : ICommand<HotelDto>
+    public interface IEditChainCommand : ICommand<CreateChainDto>
     {
     }
 }
