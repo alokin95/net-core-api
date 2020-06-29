@@ -13,7 +13,5 @@ namespace Application.DataTransfer
         public string Country { get; set; }
         public string City { get; set; }
         public int PostalCode { get; set; }
-
-        public HotelDto Hotel { get; set; }
     }
 }
