@@ -1,6 +1,6 @@
 ﻿using Application.DataTransfer;
 using Application.Exceptions;
-using Application.Queries.Chain;
+using Application.Queries.ChainQueries;
 using AutoMapper;
 using DataAccess;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +31,6 @@ namespace Implementation.Queries.ChainQueries
             var chain = this.context.Chains
                 .Include(c => c.Manager)
                 .Include(c => c.Hotels)
-                    .ThenInclude(h => h.Location)
                 .FirstOrDefault(c => c.Id == id);
 
             if (chain == null)

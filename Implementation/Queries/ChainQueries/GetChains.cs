@@ -1,7 +1,7 @@
 ﻿using Application;
 using Application.DataTransfer;
 using Application.DataTransfer.Search;
-using Application.Queries.Chain;
+using Application.Queries.ChainQueries;
 using Application.Response;
 using AutoMapper;
 using DataAccess;

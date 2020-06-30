@@ -1,5 +1,6 @@
 ﻿using Application.DataTransfer.Search;
 using Application.Response;
+using DataAccess;
 using Domain.Entity;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,12 @@ namespace Implementation.Extensions
                 Total = query.Count(),
                 Items = items
             };
+        }
+
+        public static void Delete(this EntityBase entity)
+        {
+            entity.DeletedAt = DateTime.Now;
+            entity.isActive = false;
         }
     }
 }

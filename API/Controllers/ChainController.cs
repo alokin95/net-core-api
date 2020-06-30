@@ -6,7 +6,7 @@ using Application;
 using Application.Commands.ChainCommands;
 using Application.DataTransfer;
 using Application.DataTransfer.Search;
-using Application.Queries.Chain;
+using Application.Queries.ChainQueries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 

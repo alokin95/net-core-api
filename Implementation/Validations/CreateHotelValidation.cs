@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Implementation.Validations
 {
-    public class CreateHotelValidator : AbstractValidator<HotelDto>
+    public class CreateHotelValidation : AbstractValidator<HotelDto>
     {
         private readonly Database _dbContext;
         public CreateHotelValidator(Database context)

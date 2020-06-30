@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Queries.Chain
+namespace Application.Queries.AmenityQueries
 {
-    public interface IGetChainsQuery : IQuery<ChainSearch, PagedResponse<ChainDto>>
+    public interface IGetAmenitiesQuery : IQuery<AmenitySearch, PagedResponse<AmenityDto>>
     {
     }
 }

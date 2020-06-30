@@ -1,36 +1,38 @@
-﻿using Application.Commands.ChainCommands;
+﻿using Application.Commands.AmenityCommands;
 using Application.Exceptions;
 using DataAccess;
+using Domain.Entity;
 using Implementation.Extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
-namespace Implementation.Commands.ChainCommands
+namespace Implementation.Commands.AmenityCommands
 {
-    public class DeleteChain : IDeleteChainCommand
+    public class DeleteAmenity : IDeleteAmenityCommand
     {
-        public int Id => 8;
+        public int Id => 15;
 
-        public string Name => "Delete chain";
+        public string Name => "Delete amenity";
 
         private readonly Database context;
 
-        public DeleteChain(Database context)
+        public DeleteAmenity(Database context)
         {
             this.context = context;
         }
 
         public void Execute(int id)
         {
-            var chain = this.context.Chains.Find(id);
+            var amenity = this.context.Amenities.Find(id);
 
-            if (chain == null)
+            if (amenity == null)
             {
                 throw new EntityNotFoundException(id);
             }
 
-            chain.Delete();
+            amenity.Delete();
 
             this.context.SaveChanges();
         }

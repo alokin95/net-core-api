@@ -7,5 +7,7 @@ namespace Application.DataTransfer.Search
 {
     public class AmenitySearch : PagedSearch
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace Implementation.Validations
             this.context = context;
 
             RuleFor(c => c.Name)
-                .NotEmpty()
+                .NotNull()
                 .MinimumLength(2)
                 .MaximumLength(30)
                 .Must(NameIsUnique)

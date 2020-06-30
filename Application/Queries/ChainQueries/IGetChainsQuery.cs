@@ -1,12 +1,13 @@
 ﻿using Application.DataTransfer;
 using Application.DataTransfer.Search;
+using Application.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Queries.Chain
+namespace Application.Queries.ChainQueries
 {
-    public interface IGetSingleChainQuery : IQuery<int, ChainDto>
+    public interface IGetChainsQuery : IQuery<ChainSearch, PagedResponse<ChainDto>>
     {
     }
 }

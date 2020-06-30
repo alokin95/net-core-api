@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Application.Commands.HotelCommands
+namespace Application.Queries.AmenityQueries
 {
-    public interface ICreateHotelCommand : ICommand<CreateHotelDto>
+    public interface IGetSingleAmenityQuery : IQuery<int, AmenityDto>
     {
     }
 }

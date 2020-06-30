@@ -5,18 +5,21 @@ using System.Reflection;
 using System.Threading.Tasks;
 using API.App;
 using Application;
+using Application.Commands.AmenityCommands;
 using Application.Commands.ChainCommands;
-using Application.Hotel.Queries;
-using Application.Queries;
-using Application.Queries.Chain;
+using Application.Queries.AmenityQueries;
+using Application.Queries.ChainQueries;
 using AutoMapper;
 using DataAccess;
+using Implementation.Commands;
+using Implementation.Commands.AmenityCommands;
+using Implementation.Commands.AmmenityCommands;
 using Implementation.Commands.ChainCommands;
 using Implementation.Logger;
 using Implementation.Profiles;
+using Implementation.Queries.AmenityQueries;
 using Implementation.Queries.ChainCommands;
 using Implementation.Queries.ChainQueries;
-using Implementation.Queries.Hotel;
 using Implementation.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,16 +58,29 @@ namespace API
             services.AddTransient<IApplicationActor, AdminFakeApiActor>();
             services.AddTransient<Application.ILogger, LogToConsole>();
 
-            //Chain interfaces
+            #region Chain
             services.AddTransient<IGetChainsQuery, GetChains>();
             services.AddTransient<IGetSingleChainQuery, GetOneChain>();
             services.AddTransient<ICreateChainCommand, CreateChain>();
             services.AddTransient<IEditChainCommand, EditChain>();
             services.AddTransient<IDeleteChainCommand, DeleteChain>();
+            #endregion
 
-            //Validations
+            #region Amenity
+            services.AddTransient<IGetAmenitiesQuery, GetAmenities>();
+            services.AddTransient<ICreateAmenityCommand, CreateAmenity>();
+            services.AddTransient<IGetSingleAmenityQuery, GetOneAmenity>();
+            services.AddTransient<IEditAmenityCommand, EditAmenity>();
+            services.AddTransient<IDeleteAmenityCommand, DeleteAmenity>();
+            #endregion
+
+            #region Validations
             services.AddTransient<CreateChainValidation>();
             services.AddTransient<EditChainValidation>();
+            services.AddTransient<CreateAmenityValidation>();
+            services.AddTransient<EditAmenityValidation>();
+            services.AddTransient<CreateHotelValidation>();
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +93,7 @@ namespace API
 
             app.UseRouting();
 
-            //app.UseMiddleware<ExceptionHandler>();
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseAuthorization();
 
