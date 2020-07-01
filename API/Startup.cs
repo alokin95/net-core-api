@@ -10,6 +10,7 @@ using Application.Commands.ChainCommands;
 using Application.Commands.HotelCommands;
 using Application.Commands.RoomCommands;
 using Application.Commands.UserCommands;
+using Application.Email;
 using Application.Hotel.Queries;
 using Application.Queries.AmenityQueries;
 using Application.Queries.ChainQueries;
@@ -26,6 +27,7 @@ using Implementation.Commands.ChainCommands;
 using Implementation.Commands.HotelCommands;
 using Implementation.Commands.RoomCommands;
 using Implementation.Commands.UserCommands;
+using Implementation.Email;
 using Implementation.Logger;
 using Implementation.Profiles;
 using Implementation.Queries;
@@ -76,6 +78,7 @@ namespace API
             services.AddTransient<IApplicationActor, AdminFakeApiActor>();
             services.AddTransient<Application.ILogger, LogToDatabase>();
             services.AddTransient<IGetLogsQuery, GetLogs>();
+            services.AddTransient<IEmailSender, SmptEmailSender>();
             #endregion
 
             #region Chain
@@ -146,7 +149,7 @@ namespace API
 
             app.UseRouting();
 
-            //app.UseMiddleware<ExceptionHandler>();
+            app.UseMiddleware<ExceptionHandler>();
 
             app.UseAuthorization();
 

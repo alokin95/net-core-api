@@ -30,8 +30,7 @@ namespace Implementation.Queries.HotelQueries
         {
             var hotel = this.context.Hotels
                 .Include(h => h.Location)
-                .Include(h => h.Manager)
-                .Include(h => h.Chain)
+                .Include(h => h.Rooms)
                 .Include(h => h.Amenities)
                     .ThenInclude(ha => ha.Amenity)
                 .FirstOrDefault(h => h.Id == id);
