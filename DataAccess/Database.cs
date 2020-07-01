@@ -15,7 +15,7 @@ namespace DataAccess
         public DbSet<Amenity> Amenities { get; set; }
         public DbSet<Chain> Chains { get; set; }
         public DbSet<Location> Locations { get; set; }
-
+        public DbSet<ApplicationLog> AppLogs { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
@@ -26,6 +26,7 @@ namespace DataAccess
             modelBuilder.ApplyConfiguration(new RoomConfiguration());
             modelBuilder.ApplyConfiguration(new RoomAmenityConfiguration());
             modelBuilder.ApplyConfiguration(new HotelAmenityConfiguration());
+            //modelBuilder.ApplyConfiguration(new LogConfiguration());
 
             modelBuilder.Entity<Hotel>().HasQueryFilter(h => h.isActive && h.DeletedAt == null);
             modelBuilder.Entity<Location>().HasQueryFilter(l => l.Hotel.isActive && l.Hotel.DeletedAt == null);

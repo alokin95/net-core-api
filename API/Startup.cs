@@ -14,6 +14,7 @@ using Application.Hotel.Queries;
 using Application.Queries.AmenityQueries;
 using Application.Queries.ChainQueries;
 using Application.Queries.HotelQueries;
+using Application.Queries.LogQueries;
 using Application.Queries.RoomQueries;
 using Application.Queries.UserQueries;
 using AutoMapper;
@@ -33,6 +34,7 @@ using Implementation.Queries.ChainCommands;
 using Implementation.Queries.ChainQueries;
 using Implementation.Queries.Hotel;
 using Implementation.Queries.HotelQueries;
+using Implementation.Queries.LogQueries;
 using Implementation.Queries.RoomQueries;
 using Implementation.Queries.UserQueries;
 using Implementation.Validations;
@@ -72,7 +74,8 @@ namespace API
             #region Application defaults
             services.AddTransient<ActionDispatcher>();
             services.AddTransient<IApplicationActor, AdminFakeApiActor>();
-            services.AddTransient<Application.ILogger, LogToConsole>();
+            services.AddTransient<Application.ILogger, LogToDatabase>();
+            services.AddTransient<IGetLogsQuery, GetLogs>();
             #endregion
 
             #region Chain

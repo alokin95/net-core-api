@@ -11,7 +11,7 @@ namespace EFDataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
-            builder.HasIndex(l => new {l.City, l.Address, l.Country }).IsUnique();
+            builder.HasIndex(l => new {l.City, l.Address, l.Country, l.PostalCode }).IsUnique();
             builder.Property(l => l.Address).IsRequired();
             builder.Property(l => l.City).IsRequired();
             builder.Property(l => l.Country).IsRequired();
