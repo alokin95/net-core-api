@@ -31,6 +31,7 @@ namespace DataAccess
             modelBuilder.Entity<Location>().HasQueryFilter(l => l.Hotel.isActive && l.Hotel.DeletedAt == null);
             modelBuilder.Entity<Chain>().HasQueryFilter(c => c.isActive && c.DeletedAt == null);
             modelBuilder.Entity<Amenity>().HasQueryFilter(a => a.isActive && a.DeletedAt == null);
+            modelBuilder.Entity<Room>().HasQueryFilter(r => r.isActive && r.DeletedAt == null);
         }
 
         public override int SaveChanges()
