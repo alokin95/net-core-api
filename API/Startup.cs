@@ -9,11 +9,13 @@ using Application.Commands.AmenityCommands;
 using Application.Commands.ChainCommands;
 using Application.Commands.HotelCommands;
 using Application.Commands.RoomCommands;
+using Application.Commands.UserCommands;
 using Application.Hotel.Queries;
 using Application.Queries.AmenityQueries;
 using Application.Queries.ChainQueries;
 using Application.Queries.HotelQueries;
 using Application.Queries.RoomQueries;
+using Application.Queries.UserQueries;
 using AutoMapper;
 using DataAccess;
 using Implementation.Commands;
@@ -22,6 +24,7 @@ using Implementation.Commands.AmmenityCommands;
 using Implementation.Commands.ChainCommands;
 using Implementation.Commands.HotelCommands;
 using Implementation.Commands.RoomCommands;
+using Implementation.Commands.UserCommands;
 using Implementation.Logger;
 using Implementation.Profiles;
 using Implementation.Queries;
@@ -31,6 +34,7 @@ using Implementation.Queries.ChainQueries;
 using Implementation.Queries.Hotel;
 using Implementation.Queries.HotelQueries;
 using Implementation.Queries.RoomQueries;
+using Implementation.Queries.UserQueries;
 using Implementation.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -103,6 +107,14 @@ namespace API
             services.AddTransient<IDeleteRoomCommand, DeleteRoom>();
             #endregion
 
+            #region User
+            services.AddTransient<ICreateUserCommand, CreateUser>();
+            services.AddTransient<IGetUsersQuery, GetUsers>();
+            services.AddTransient<IGetSingleUserQuery, GetOneUser>();
+            services.AddTransient<IEditUserCommand, EditUser>();
+            services.AddTransient<IDeleteUserCommand, DeleteUser>();
+            #endregion
+
             #region Validations
             services.AddTransient<CreateChainValidation>();
             services.AddTransient<EditChainValidation>();
@@ -114,6 +126,8 @@ namespace API
             services.AddTransient<EditLocationValidation>();
             services.AddTransient<CreateRoomValidation>();
             services.AddTransient<EditRoomValidation>();
+            services.AddTransient<CreateUserValidation>();
+            services.AddTransient<EditUserValidation>();
             #endregion
         }
 

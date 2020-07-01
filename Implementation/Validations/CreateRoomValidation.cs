@@ -17,12 +17,12 @@ namespace Implementation.Validations
             this.context = context;
 
             RuleFor(r => r.Description)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(200);
 
             RuleFor(r => r.Name)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(100)
                 .Must(NameMustBeUniqueForEachHotel)

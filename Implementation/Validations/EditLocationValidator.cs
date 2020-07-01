@@ -24,6 +24,7 @@ namespace Implementation.Validations
             RuleFor(l => l.Country)
                 .NotEmpty()
                 .MinimumLength(2);
+
             RuleFor(l => l.Address)
                 .NotEmpty()
                 .MinimumLength(2)
@@ -34,6 +35,7 @@ namespace Implementation.Validations
                 && l.Address == dto.Address
                 && l.Id != dto.Id))
                 .WithMessage("The same address already exists. Please enter another one");;
+
             RuleFor(l => l.PostalCode)
                 .NotEmpty();
                 

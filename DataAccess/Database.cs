@@ -32,6 +32,7 @@ namespace DataAccess
             modelBuilder.Entity<Chain>().HasQueryFilter(c => c.isActive && c.DeletedAt == null);
             modelBuilder.Entity<Amenity>().HasQueryFilter(a => a.isActive && a.DeletedAt == null);
             modelBuilder.Entity<Room>().HasQueryFilter(r => r.isActive && r.DeletedAt == null);
+            modelBuilder.Entity<User>().HasQueryFilter(u => u.isActive && u.DeletedAt == null);
         }
 
         public override int SaveChanges()

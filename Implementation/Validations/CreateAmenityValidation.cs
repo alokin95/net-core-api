@@ -17,12 +17,12 @@ namespace Implementation.Validations
             this.context = context;
 
             RuleFor(dto => dto.Description)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(1)
                 .MaximumLength(100);
 
             RuleFor(dto => dto.Name)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(100)
                 .Must(NameMustBeUnique)

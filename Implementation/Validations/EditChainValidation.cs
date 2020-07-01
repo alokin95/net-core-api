@@ -18,14 +18,14 @@ namespace Implementation.Validations
             this.context = context;
 
             RuleFor(dto => dto.Name)
-                .NotNull()
+                .NotEmpty()
                 .MinimumLength(2)
                 .MaximumLength(100)
                 .Must(NameMustBeUnique)
                 .WithMessage("The selected name is already taken");
 
             RuleFor(dto => dto.ManagerId)
-                .NotNull()
+                .NotEmpty()
                 .Must(ManagerMustExist)
                 .WithMessage("The selected manager does not exist");
         }

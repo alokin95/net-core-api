@@ -22,17 +22,17 @@ namespace Implementation.Validations
                 .WithMessage("Hotel name already taken");
 
             RuleFor(dto => dto.ManagerId)
-                .NotNull()
+                .NotEmpty()
                 .Must(ManagerMustExist)
                 .WithMessage("The selected hotel manager does not exist. Please pick another one");
 
             RuleFor(dto => dto.ChainID)
-                .NotNull()
+                .NotEmpty()
                 .Must(ChainMustExist)
                 .WithMessage("The selected hotel chain does not exist");
 
             RuleFor(dto => dto.Location)
-                .NotNull()
+                .NotEmpty()
                 .When(dto => dto.Location != null)
                 .NotEmpty()
                 .SetValidator(new CreateLocationValidation(this.context));
