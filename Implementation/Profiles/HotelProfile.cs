@@ -13,13 +13,13 @@ namespace Implementation.Profiles
         public HotelProfile()
         {
             CreateMap<Hotel, HotelDto>()
-                .ForMember(dto => dto.Location, opt => opt.MapFrom(h => new LocationDto
+                .ForMember(dto => dto.Amenities,
+                opt => opt.MapFrom(hotel => hotel.Amenities.Select(ha => new AmenityDto
                 {
-                    Address = h.Location.Address,
-                    City = h.Location.City,
-                    PostalCode = h.Location.PostalCode,
-                    Country = h.Location.Country
-                }));
+                    Description = ha.Amenity.Description,
+                    Icon = ha.Amenity.Icon,
+                    Name = ha.Amenity.Name
+                })));
             CreateMap<HotelDto, Hotel>();
         }
     }

@@ -36,6 +36,15 @@ namespace Implementation.Validations
                 .When(dto => dto.Location != null)
                 .NotEmpty()
                 .SetValidator(new EditLocationValidation(this.context));
+
+            RuleFor(dto => dto.Location)
+                .Must(LocationMustBeUnique)
+                .WithMessage("Location already exists");
+        }
+
+        private bool LocationMustBeUnique(CreateHotelDto hotel, LocationDto loc)
+        {
+            return !this.context.Locations.Any(l => l.PostalCode == loc.PostalCode && l.City == loc.City && l.Address == loc.Address && l.Country == loc.Country && hotel.Location.Id != l.Id);
         }
 
         private bool HotelNameMustBeUnique(CreateHotelDto dto, string name)

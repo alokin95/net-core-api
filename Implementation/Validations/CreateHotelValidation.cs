@@ -36,6 +36,10 @@ namespace Implementation.Validations
                 .When(dto => dto.Location != null)
                 .NotEmpty()
                 .SetValidator(new CreateLocationValidation(this.context));
+
+            RuleForEach(dto => dto.Amenities)
+                .SetValidator(new HotelAmenityValidation(this.context))
+                .When(dto => dto.Amenities.Any());
         }
 
         private bool HotelNameMustBeUnique(string name)

@@ -13,5 +13,6 @@ namespace Application.DataTransfer
         public string Description { get; set; }
         public IEnumerable<RoomDto> Rooms { get; set; }
         public Location Location { get; set; }
+        public IEnumerable<AmenityDto> Amenities { get; set; }
     }
 }

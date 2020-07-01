@@ -21,7 +21,7 @@ namespace EFDataAccess.Configurations
 
             builder.HasMany(a => a.Hotels)
                 .WithOne(ha => ha.Amenity)
-                .HasForeignKey(ha => ha.HotelId)
+                .HasForeignKey(ha => ha.AmenityId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

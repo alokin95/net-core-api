@@ -32,6 +32,8 @@ namespace Implementation.Queries.HotelQueries
                 .Include(h => h.Location)
                 .Include(h => h.Manager)
                 .Include(h => h.Chain)
+                .Include(h => h.Amenities)
+                    .ThenInclude(ha => ha.Amenity)
                 .FirstOrDefault(h => h.Id == id);
 
             if (hotel == null)

@@ -131,6 +131,8 @@ namespace API
             services.AddTransient<EditRoomValidation>();
             services.AddTransient<CreateUserValidation>();
             services.AddTransient<EditUserValidation>();
+            services.AddTransient<HotelAmenityValidation>();
+            services.AddTransient<RoomAmenityValidation>();
             #endregion
         }
 
@@ -144,7 +146,7 @@ namespace API
 
             app.UseRouting();
 
-            app.UseMiddleware<ExceptionHandler>();
+            //app.UseMiddleware<ExceptionHandler>();
 
             app.UseAuthorization();
 

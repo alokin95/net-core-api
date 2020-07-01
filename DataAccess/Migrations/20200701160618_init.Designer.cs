@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DataAccess.Migrations
+namespace EFDataAccess.Migrations
 {
     [DbContext(typeof(Database))]
-    [Migration("20200617024459_initial")]
-    partial class initial
+    [Migration("20200701160618_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("DataAccess.Entity.Amenity", b =>
+            modelBuilder.Entity("Domain.Entity.Amenity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -59,7 +59,43 @@ namespace DataAccess.Migrations
                     b.ToTable("Amenities");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Chain", b =>
+            modelBuilder.Entity("Domain.Entity.ApplicationLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ActionName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Actionid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ActorIdentity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("isActive")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AppLogs");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Chain", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -96,7 +132,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Chains");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Hotel", b =>
+            modelBuilder.Entity("Domain.Entity.Hotel", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,6 +152,9 @@ namespace DataAccess.Migrations
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
                     b.Property<int>("ManagerId")
                         .HasColumnType("int");
 
@@ -132,6 +171,9 @@ namespace DataAccess.Migrations
 
                     b.HasIndex("ChainId");
 
+                    b.HasIndex("LocationId")
+                        .IsUnique();
+
                     b.HasIndex("ManagerId");
 
                     b.HasIndex("Name")
@@ -141,7 +183,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Hotels");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.HotelAmenity", b =>
+            modelBuilder.Entity("Domain.Entity.HotelAmenity", b =>
                 {
                     b.Property<int>("AmenityId")
                         .HasColumnType("int");
@@ -149,19 +191,14 @@ namespace DataAccess.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HotelId1")
-                        .HasColumnType("int");
-
                     b.HasKey("AmenityId", "HotelId");
 
                     b.HasIndex("HotelId");
 
-                    b.HasIndex("HotelId1");
-
                     b.ToTable("HotelAmenity");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Location", b =>
+            modelBuilder.Entity("Domain.Entity.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,9 +223,6 @@ namespace DataAccess.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("HotelId")
-                        .HasColumnType("int");
-
                     b.Property<int>("PostalCode")
                         .HasColumnType("int");
 
@@ -200,16 +234,13 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("HotelId")
-                        .IsUnique();
-
-                    b.HasIndex("City", "Address", "Country")
+                    b.HasIndex("City", "Address", "Country", "PostalCode")
                         .IsUnique();
 
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Room", b =>
+            modelBuilder.Entity("Domain.Entity.Room", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -246,7 +277,7 @@ namespace DataAccess.Migrations
                     b.ToTable("Rooms");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.RoomAmenity", b =>
+            modelBuilder.Entity("Domain.Entity.RoomAmenity", b =>
                 {
                     b.Property<int>("RoomId")
                         .HasColumnType("int");
@@ -261,7 +292,7 @@ namespace DataAccess.Migrations
                     b.ToTable("RoomAmenity");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.User", b =>
+            modelBuilder.Entity("Domain.Entity.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -302,72 +333,69 @@ namespace DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Chain", b =>
+            modelBuilder.Entity("Domain.Entity.Chain", b =>
                 {
-                    b.HasOne("DataAccess.Entity.User", "Manager")
+                    b.HasOne("Domain.Entity.User", "Manager")
                         .WithMany("Chains")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Hotel", b =>
+            modelBuilder.Entity("Domain.Entity.Hotel", b =>
                 {
-                    b.HasOne("DataAccess.Entity.Chain", "Chain")
+                    b.HasOne("Domain.Entity.Chain", "Chain")
                         .WithMany("Hotels")
                         .HasForeignKey("ChainId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Entity.User", "Manager")
+                    b.HasOne("Domain.Entity.Location", "Location")
+                        .WithOne("Hotel")
+                        .HasForeignKey("Domain.Entity.Hotel", "LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User", "Manager")
                         .WithMany("Hotels")
                         .HasForeignKey("ManagerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.HotelAmenity", b =>
+            modelBuilder.Entity("Domain.Entity.HotelAmenity", b =>
                 {
-                    b.HasOne("DataAccess.Entity.Amenity", "Amenity")
+                    b.HasOne("Domain.Entity.Amenity", "Amenity")
                         .WithMany("Hotels")
-                        .HasForeignKey("HotelId")
+                        .HasForeignKey("AmenityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Entity.Hotel", "Hotel")
+                    b.HasOne("Domain.Entity.Hotel", "Hotel")
                         .WithMany("Amenities")
-                        .HasForeignKey("HotelId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.Location", b =>
+            modelBuilder.Entity("Domain.Entity.Room", b =>
                 {
-                    b.HasOne("DataAccess.Entity.Hotel", "Hotel")
-                        .WithOne("Location")
-                        .HasForeignKey("DataAccess.Entity.Location", "HotelId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("DataAccess.Entity.Room", b =>
-                {
-                    b.HasOne("DataAccess.Entity.Hotel", "Hotel")
+                    b.HasOne("Domain.Entity.Hotel", "Hotel")
                         .WithMany("Rooms")
                         .HasForeignKey("HotelId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DataAccess.Entity.RoomAmenity", b =>
+            modelBuilder.Entity("Domain.Entity.RoomAmenity", b =>
                 {
-                    b.HasOne("DataAccess.Entity.Amenity", "Amenity")
+                    b.HasOne("Domain.Entity.Amenity", "Amenity")
                         .WithMany("Rooms")
                         .HasForeignKey("AmenityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("DataAccess.Entity.Room", "Room")
+                    b.HasOne("Domain.Entity.Room", "Room")
                         .WithMany("Amenities")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Restrict)

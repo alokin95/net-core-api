@@ -32,6 +32,10 @@ namespace Implementation.Validations
                 .NotEmpty()
                 .Must(HotelMustExist)
                 .WithMessage("The selected hotel does not exist");
+
+            RuleForEach(dto => dto.Amenities)
+                .SetValidator(new RoomAmenityValidation(this.context))
+                .When(dto => dto.Amenities.Any());
         }
 
         private bool HotelMustExist(int hotelId)

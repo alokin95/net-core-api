@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace DataAccess.Migrations
+namespace EFDataAccess.Migrations
 {
     [DbContext(typeof(Database))]
     partial class DatabaseModelSnapshot : ModelSnapshot
@@ -189,14 +189,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("HotelId")
                         .HasColumnType("int");
 
-                    b.Property<int>("HotelId1")
-                        .HasColumnType("int");
-
                     b.HasKey("AmenityId", "HotelId");
 
                     b.HasIndex("HotelId");
-
-                    b.HasIndex("HotelId1");
 
                     b.ToTable("HotelAmenity");
                 });
@@ -370,14 +365,14 @@ namespace DataAccess.Migrations
                 {
                     b.HasOne("Domain.Entity.Amenity", "Amenity")
                         .WithMany("Hotels")
-                        .HasForeignKey("HotelId")
+                        .HasForeignKey("AmenityId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Domain.Entity.Hotel", "Hotel")
                         .WithMany("Amenities")
-                        .HasForeignKey("HotelId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("HotelId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

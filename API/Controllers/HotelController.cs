@@ -62,6 +62,8 @@ namespace API.Controllers
             [FromServices]IEditHotelCommand editHotelCommand)
         {
             dto.Id = id;
+            dto.Location.Id = id;
+
             _dispatcher.DispatchCommand(editHotelCommand, dto);
             return NoContent();
         }

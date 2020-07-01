@@ -34,6 +34,7 @@ namespace Implementation.Commands.HotelCommands
             var hotel = this.mapper.Map<Hotel>(hotelDto);
 
             this.context.Hotels.Add(hotel);
+
             this.context.SaveChanges();
         }
 
