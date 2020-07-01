@@ -8,6 +8,7 @@ using Application.DataTransfer;
 using Application.DataTransfer.Search;
 using Application.Hotel.Queries;
 using Application.Queries;
+using Application.Queries.HotelQueries;
 using AutoMapper;
 using DataAccess;
 using Domain.Entity;
@@ -39,9 +40,10 @@ namespace API.Controllers
 
         // GET api/<HotelController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id,
+            [FromServices]IGetSingleHotelQuery getSingleHotelQuery)
         {
-            return null;
+            return Ok(_dispatcher.DispatchQuery(getSingleHotelQuery, id));
         }
 
         // POST api/<HotelController>
@@ -55,16 +57,22 @@ namespace API.Controllers
 
         // PUT api/<HotelController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] HotelDto dto, [FromServices]EditHotelValidator editHotelValidator)
+        public IActionResult Put(int id, 
+            [FromBody] CreateHotelDto dto, 
+            [FromServices]IEditHotelCommand editHotelCommand)
         {
-            return null;
+            dto.Id = id;
+            _dispatcher.DispatchCommand(editHotelCommand, dto);
+            return NoContent();
         }
 
         // DELETE api/<HotelController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id,
+            [FromServices]IDeleteHotelCommand deleteHotelCommand)
         {
-            return null;
+            _dispatcher.DispatchCommand(deleteHotelCommand, id);
+            return NoContent();
         }
     }
 }

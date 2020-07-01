@@ -11,6 +11,7 @@ using Application.Commands.HotelCommands;
 using Application.Hotel.Queries;
 using Application.Queries.AmenityQueries;
 using Application.Queries.ChainQueries;
+using Application.Queries.HotelQueries;
 using AutoMapper;
 using DataAccess;
 using Implementation.Commands;
@@ -24,6 +25,7 @@ using Implementation.Queries.AmenityQueries;
 using Implementation.Queries.ChainCommands;
 using Implementation.Queries.ChainQueries;
 using Implementation.Queries.Hotel;
+using Implementation.Queries.HotelQueries;
 using Implementation.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -75,6 +77,9 @@ namespace API
             #region Hotel
             services.AddTransient<ICreateHotelCommand, CreateHotel>();
             services.AddTransient<IGetHotelsQuery, GetHotels>();
+            services.AddTransient<IGetSingleHotelQuery, GetOneHotel>();
+            services.AddTransient<IEditHotelCommand, EditHotel>();
+            services.AddTransient<IDeleteHotelCommand, DeleteHotel>();
             #endregion
 
             #region Amenity
@@ -92,6 +97,8 @@ namespace API
             services.AddTransient<EditAmenityValidation>();
             services.AddTransient<CreateHotelValidation>();
             services.AddTransient<CreateLocationValidation>();
+            services.AddTransient<EditHotelValidation>();
+            services.AddTransient<EditLocationValidation>();
             #endregion
         }
 

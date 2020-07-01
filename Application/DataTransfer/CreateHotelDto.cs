@@ -6,6 +6,7 @@ namespace Application.DataTransfer
 {
     public class CreateHotelDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public LocationDto Location { get; set; }
         public int ManagerId { get; set; }
