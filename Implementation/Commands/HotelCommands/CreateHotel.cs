@@ -2,6 +2,8 @@
 using Application.DataTransfer;
 using AutoMapper;
 using DataAccess;
+using Domain.Entity;
+using FluentValidation;
 using Implementation.Validations;
 using System;
 using System.Collections.Generic;
@@ -25,9 +27,15 @@ namespace Implementation.Commands.HotelCommands
             this.createHotelValidation = createHotelValidation;
         }
 
-        public void Execute(HotelDto request)
+        public void Execute(CreateHotelDto hotelDto)
         {
-            throw new NotImplementedException();
+            this.createHotelValidation.ValidateAndThrow(hotelDto);
+
+            var hotel = this.mapper.Map<Hotel>(hotelDto);
+
+            this.context.Hotels.Add(hotel);
+            this.context.SaveChanges();
         }
+
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Application;
+using Application.Commands.HotelCommands;
 using Application.DataTransfer;
 using Application.DataTransfer.Search;
 using Application.Hotel.Queries;
@@ -23,54 +24,17 @@ namespace API.Controllers
     [ApiController]
     public class HotelController : ControllerBase
     {
-        private readonly ActionDispatcher actionDispatcher;
+        private readonly ActionDispatcher _dispatcher;
         public HotelController(ActionDispatcher actionDispatcher)
         {
-            this.actionDispatcher = actionDispatcher;
+            _dispatcher = actionDispatcher;
         }
 
         // GET: api/<HotelController>
         [HttpGet]
         public IActionResult Get([FromQuery]HotelSearch hotelSearch, [FromServices]IGetHotelsQuery getHotels)
         {
-            return Ok(actionDispatcher.DispatchQuery(getHotels, hotelSearch));
-            /*try
-            {
-                var hotelsQuery = _dbContext.Hotels.AsQueryable();
-
-                if (dto.Country != null)
-                {
-                    hotelsQuery = hotelsQuery.Where(h => h.Location.Country.ToLower().Contains(dto.Country.ToLower()));
-                }
-
-                if (dto.City != null)
-                {
-                    hotelsQuery = hotelsQuery.Where(h => h.Location.City.ToLower().Contains(dto.Country.ToLower()));
-                }
-
-                if (dto.Address != null)
-                {
-                    hotelsQuery = hotelsQuery.Where(h => h.Location.Address.ToLower().Contains(dto.Address.ToLower()));
-                }
-
-                if (dto.Name != null)
-                {
-                    hotelsQuery = hotelsQuery.Where(h => h.Name.ToLower().Contains(dto.Name.ToLower()));
-                }
-
-                if (dto.PostalCode.ToString() != null)
-                {
-                    hotelsQuery = hotelsQuery.Where(h => h.Location.PostalCode == dto.PostalCode);
-                }
-
-                var response = _mapper.Map<List<HotelDto>>(hotelsQuery.ToList());
-
-                return Ok(response);
-            }
-            catch(Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }*/
+            return Ok(_dispatcher.DispatchQuery(getHotels, hotelSearch));
         }
 
         // GET api/<HotelController>/5
@@ -82,9 +46,11 @@ namespace API.Controllers
 
         // POST api/<HotelController>
         [HttpPost]
-        public IActionResult Post([FromBody]HotelDto dto, [FromServices]CreateHotelValidator createHotelValidator)
+        public IActionResult Post([FromBody]CreateHotelDto createHotelDto,
+            [FromServices]ICreateHotelCommand createHotelCommand)
         {
-            return null;
+            _dispatcher.DispatchCommand(createHotelCommand, createHotelDto);
+            return StatusCode(StatusCodes.Status201Created);
         }
 
         // PUT api/<HotelController>/5

@@ -72,16 +72,8 @@ namespace API.Controllers
 
         // POST api/<LocationController>
         [HttpPost]
-        public IActionResult Post([FromBody]LocationDto dto,
-            [FromServices]CreateLocationValidator createLocationValidator)
+        public IActionResult Post([FromBody]LocationDto dto)
         {
-            var validator = createLocationValidator.Validate(dto);
-
-            if (!validator.IsValid)
-            {
-                //return validator.ValidationErrors();
-            }
-
             var location = _mapper.Map<Location>(dto);
 
             try

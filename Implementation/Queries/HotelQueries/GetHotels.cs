@@ -5,6 +5,8 @@ using Application.Queries;
 using Application.Response;
 using AutoMapper;
 using DataAccess;
+using Implementation.Extensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,21 +31,38 @@ namespace Implementation.Queries.Hotel
 
         public PagedResponse<HotelDto> Execute(HotelSearch search)
         {
-            var hotelsQuery = this.dbContext.Hotels.AsQueryable();
+            var hotelsQuery = this.dbContext.Hotels
+                .Include(h => h.Location)
+                .AsQueryable();
 
-            var skipCount = search.PerPage * (search.Page - 1);
-
-            var hotels = mapper.Map<List<HotelDto>>(hotelsQuery.Skip(skipCount).Take(search.Page).ToList());
-
-            var response = new PagedResponse<HotelDto>
+            if (search.Address != null)
             {
-                CurrentPage = search.Page,
-                ItemsPerPage = search.PerPage,
-                Total = hotels.Count(),
-                Items = hotels
-            };
+                hotelsQuery = hotelsQuery.Where(h => h.Location.Address.ToLower().Contains(search.Address.ToLower()));
+            }
 
-            return response;
+            if (search.City != null)
+            {
+                hotelsQuery = hotelsQuery.Where(h => h.Location.City.ToLower().Contains(search.City.ToLower()));
+            }
+
+            if (search.Country != null)
+            {
+                hotelsQuery = hotelsQuery.Where(h => h.Location.Country.ToLower().Contains(search.Country.ToLower()));
+            }
+
+            if (search.PostalCode > 0)
+            {
+                hotelsQuery = hotelsQuery.Where(h => h.Location.PostalCode == search.PostalCode);
+            }
+
+            if (search.Name != null)
+            {
+                hotelsQuery = hotelsQuery.Where(h => h.Name.ToLower().Contains(search.Name.ToLower()));
+            }
+
+            var hotels = this.mapper.Map<List<HotelDto>>(hotelsQuery.FormatForPagedResponse(search));
+
+            return hotels.GeneratePagedResponse(search, hotelsQuery);
         }
     }
 }

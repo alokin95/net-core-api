@@ -7,6 +7,8 @@ using API.App;
 using Application;
 using Application.Commands.AmenityCommands;
 using Application.Commands.ChainCommands;
+using Application.Commands.HotelCommands;
+using Application.Hotel.Queries;
 using Application.Queries.AmenityQueries;
 using Application.Queries.ChainQueries;
 using AutoMapper;
@@ -15,11 +17,13 @@ using Implementation.Commands;
 using Implementation.Commands.AmenityCommands;
 using Implementation.Commands.AmmenityCommands;
 using Implementation.Commands.ChainCommands;
+using Implementation.Commands.HotelCommands;
 using Implementation.Logger;
 using Implementation.Profiles;
 using Implementation.Queries.AmenityQueries;
 using Implementation.Queries.ChainCommands;
 using Implementation.Queries.ChainQueries;
+using Implementation.Queries.Hotel;
 using Implementation.Validations;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -54,9 +58,11 @@ namespace API
 
             services.AddAutoMapper(typeof(ChainProfile), typeof(UserProfile), typeof(HotelProfile));
 
+            #region Application defaults
             services.AddTransient<ActionDispatcher>();
             services.AddTransient<IApplicationActor, AdminFakeApiActor>();
             services.AddTransient<Application.ILogger, LogToConsole>();
+            #endregion
 
             #region Chain
             services.AddTransient<IGetChainsQuery, GetChains>();
@@ -64,6 +70,11 @@ namespace API
             services.AddTransient<ICreateChainCommand, CreateChain>();
             services.AddTransient<IEditChainCommand, EditChain>();
             services.AddTransient<IDeleteChainCommand, DeleteChain>();
+            #endregion
+
+            #region Hotel
+            services.AddTransient<ICreateHotelCommand, CreateHotel>();
+            services.AddTransient<IGetHotelsQuery, GetHotels>();
             #endregion
 
             #region Amenity
@@ -80,6 +91,7 @@ namespace API
             services.AddTransient<CreateAmenityValidation>();
             services.AddTransient<EditAmenityValidation>();
             services.AddTransient<CreateHotelValidation>();
+            services.AddTransient<CreateLocationValidation>();
             #endregion
         }
 

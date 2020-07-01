@@ -12,7 +12,14 @@ namespace Implementation.Profiles
     {
         public HotelProfile()
         {
-            CreateMap<Hotel, HotelDto>();
+            CreateMap<Hotel, HotelDto>()
+                .ForMember(dto => dto.Location, opt => opt.MapFrom(h => new LocationDto
+                {
+                    Address = h.Location.Address,
+                    City = h.Location.City,
+                    PostalCode = h.Location.PostalCode,
+                    Country = h.Location.Country
+                }));
             CreateMap<HotelDto, Hotel>();
         }
     }
