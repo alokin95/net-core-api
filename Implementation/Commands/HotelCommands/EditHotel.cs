@@ -6,6 +6,7 @@ using DataAccess;
 using FluentValidation;
 using Implementation.Validations;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,18 +35,19 @@ namespace Implementation.Commands.HotelCommands
         {
             this.editHotelValidation.ValidateAndThrow(dto);
 
-            var hotel = this.context.Hotels.Find(dto.Id);
+            var hotel = this.context.Hotels
+                .Include(h => h.Location)
+                .FirstOrDefault(h => h.Id == dto.Id);
 
             if (hotel == null)
             {
                 throw new EntityNotFoundException(dto.Id);
             }
 
-            var location = this.context.Locations.Find(hotel.LocationId);
-            dto.Location.Id = location.Id;
+            dto.Location.Id = hotel.LocationId;
 
             this.mapper.Map(dto, hotel);
-            this.mapper.Map(dto.Location, location);
+            this.mapper.Map(dto.Location, hotel.Location);
 
             this.context.SaveChanges();
         }
