@@ -51,6 +51,22 @@ namespace Implementation.Queries.LogQueries
                 logsQuery = logsQuery.Where(lq => lq.ActionName.ToLower().Contains(search.ActionName.ToLower()));
             }
 
+            if (search.From != null)
+            {
+                logsQuery = logsQuery.Where(l => l.CreatedAt >= search.From);
+            }
+
+            if (search.From != null)
+            {
+                logsQuery = logsQuery.Where(l => l.CreatedAt <= search.To);
+            }
+
+            if (search.From != null && search.To != null)
+            {
+                logsQuery = logsQuery.Where(l => l.CreatedAt >= search.From)
+                    .Where(l => l.CreatedAt <= search.To);
+            }
+
             var logs = this.mapper.Map<List<LogDto>>(logsQuery.FormatForPagedResponse(search));
 
             return logs.GeneratePagedResponse(search, logsQuery);
